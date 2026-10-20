@@ -34,6 +34,46 @@ class CategorySerializer(serializers.ModelSerializer):
         return MenuItemSerializer(items, many=True, context=self.context).data
 
 
+class MenuItemImportSerializer(serializers.Serializer):
+    """Одно блюдо в массовом импорте меню."""
+
+    name = serializers.CharField(max_length=160)
+    description = serializers.CharField(max_length=600, allow_blank=True, required=False, default="")
+    weight = serializers.CharField(max_length=40, allow_blank=True, required=False, default="")
+    price = serializers.DecimalField(max_digits=10, decimal_places=2, min_value=0)
+    is_popular = serializers.BooleanField(required=False, default=False)
+    is_new = serializers.BooleanField(required=False, default=False)
+    is_available = serializers.BooleanField(required=False, default=True)
+    order = serializers.IntegerField(required=False, min_value=0, default=0)
+
+
+class CategoryImportSerializer(serializers.Serializer):
+    """Категория вместе со своими блюдами."""
+
+    slug = serializers.SlugField(max_length=50)
+    name = serializers.CharField(max_length=120)
+    description = serializers.CharField(max_length=255, allow_blank=True, required=False, default="")
+    emoji = serializers.CharField(max_length=8, allow_blank=True, required=False, default="")
+    order = serializers.IntegerField(required=False, min_value=0, default=0)
+    is_active = serializers.BooleanField(required=False, default=True)
+    items = MenuItemImportSerializer(many=True, required=False)
+
+
+class MenuImportSerializer(serializers.Serializer):
+    """POST /api/v1/menu/ — заливка меню целиком (категории + блюда)."""
+
+    categories = CategoryImportSerializer(many=True, allow_empty=False)
+
+
+class MenuImportResultSerializer(serializers.Serializer):
+    """Что изменилось после импорта."""
+
+    categories_created = serializers.IntegerField()
+    categories_updated = serializers.IntegerField()
+    items_created = serializers.IntegerField()
+    items_updated = serializers.IntegerField()
+
+
 class SiteInfoSerializer(serializers.ModelSerializer):
     delivery_fee = serializers.DecimalField(max_digits=10, decimal_places=2, coerce_to_string=False)
     free_delivery_from = serializers.DecimalField(max_digits=10, decimal_places=2,
