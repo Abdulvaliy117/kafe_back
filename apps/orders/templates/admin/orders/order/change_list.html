@@ -1,0 +1,12 @@
+{% extends "admin/change_list.html" %}
+
+{% block content %}
+  {% if osman_summary %}
+    <div class="osman-summary">
+      <span>🔔 Новых заказов: <b>{{ osman_summary.new }}</b></span>
+      <span>За смену: <b>{{ osman_summary.today_count }}</b> заказ(ов) на <b>{{ osman_summary.today_sum }}</b> сом</span>
+    </div>
+  {% endif %}
+  <div id="osman-new-banner" hidden></div>
+  {{ block.super }}
+{% endblock %}

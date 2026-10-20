@@ -1,0 +1,56 @@
+# Render Blueprint — разворачивает Django-API одной кнопкой.
+# Базу (DATABASE_URL) берём из Supabase, поэтому sync: false (задаётся вручную).
+services:
+  - type: web
+    name: osman-cafe-api
+    runtime: python
+    plan: free
+    buildCommand: "bash build.sh"
+    startCommand: "gunicorn core.wsgi:application --bind 0.0.0.0:$PORT"
+    healthCheckPath: /api/v1/site/
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.12.3"
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: "False"
+      - key: ALLOWED_HOSTS
+        value: ".onrender.com"
+      - key: CSRF_TRUSTED_ORIGINS
+        value: "https://osman-cafe-front.vercel.app"
+      - key: CORS_ALLOW_ALL_ORIGINS
+        value: "False"
+      - key: CORS_ALLOWED_ORIGINS
+        value: "https://osman-cafe-front.vercel.app"
+      - key: WHATSAPP_NUMBER
+        value: "99670000000"
+      - key: DELIVERY_FEE
+        value: "100"
+      # Адрес сайта-витрины (кнопки в шапке админки). Замените на свой домен Vercel.
+      - key: FRONTEND_URL
+        value: "https://osman-cafe-front.vercel.app"
+      # Вставьте строку подключения Supabase (Project Settings -> Database).
+      # Формат: postgresql://postgres.<project>:<password>@<host>:5432/postgres
+      - key: DATABASE_URL
+        sync: false
+      # Supabase Storage для фото — задайте вручную (иначе фото пропадут при передеплое).
+      - key: SUPABASE_S3_BUCKET
+        sync: false
+      - key: SUPABASE_S3_ENDPOINT
+        sync: false
+      - key: SUPABASE_S3_REGION
+        sync: false
+      - key: SUPABASE_S3_ACCESS_KEY
+        sync: false
+      - key: SUPABASE_S3_SECRET_KEY
+        sync: false
+      - key: SUPABASE_S3_PUBLIC_URL
+        sync: false
+      # Логин/пароль суперюзера для первого входа в /admin/ (можно убрать после).
+      - key: DJANGO_SUPERUSER_USERNAME
+        sync: false
+      - key: DJANGO_SUPERUSER_EMAIL
+        sync: false
+      - key: DJANGO_SUPERUSER_PASSWORD
+        sync: false

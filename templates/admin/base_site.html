@@ -1,0 +1,61 @@
+{% extends "admin/base.html" %}
+
+{% block title %}{{ title }} | Осман Кафе{% endblock %}
+
+{% block extrastyle %}
+  {{ block.super }}
+  <style>
+    #header .osman-admin-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-left: auto;
+      padding-right: 16px;
+    }
+    #header .osman-admin-actions a {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 13px;
+      border-radius: 999px;
+      border: 1px solid var(--hairline-color, #d0d0d0);
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 1;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    #header .osman-admin-actions a.primary {
+      background: #d8b05a;
+      border-color: #d8b05a;
+      color: #241610;
+    }
+    #header .osman-admin-actions a:hover {
+      opacity: 0.85;
+    }
+    @media (max-width: 767px) {
+      #header .osman-admin-actions a .osman-label {
+        display: none;
+      }
+    }
+  </style>
+{% endblock %}
+
+{% block branding %}
+  <div id="site-name"><a href="{% url 'admin:index' %}">{{ site_header|default:_('Осман Кафе') }}</a></div>
+  {% if user.is_anonymous %}
+    {% include "admin/color_theme_toggle.html" %}
+  {% endif %}
+{% endblock %}
+
+{% block nav-global %}
+  {% if frontend_url %}
+    <div class="osman-admin-actions">
+      <a class="primary" href="{{ frontend_url }}" target="_blank" rel="noopener">
+        Открыть сайт <span class="osman-label">&nbsp;↗</span>
+      </a>
+      <a href="{{ manager_url }}" target="_blank" rel="noopener">
+        Пульт менеджера <span class="osman-label">&nbsp;↗</span>
+      </a>
+    </div>
+  {% endif %}
+{% endblock %}

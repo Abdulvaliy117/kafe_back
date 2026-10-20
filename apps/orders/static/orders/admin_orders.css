@@ -1,0 +1,49 @@
+.osman-badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 999px;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.osman-quick {
+  display: inline-block;
+  padding: 2px 9px;
+  margin-right: 4px;
+  border-radius: 6px;
+  background: #d8b05a;
+  color: #241610 !important;
+  font-size: 11px;
+  font-weight: 600;
+  text-decoration: none;
+}
+.osman-quick:hover { background: #f0ddae; }
+.osman-muted { color: #999; }
+
+.osman-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 12px 16px;
+  margin: 0 0 14px;
+  border-radius: 10px;
+  background: #241610;
+  color: #f7eeda;
+  font-size: 14px;
+}
+.osman-summary b { color: #d8b05a; }
+
+#osman-new-banner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  margin: 0 0 14px;
+  border-radius: 10px;
+  background: #b48736;
+  color: #241610;
+  font-weight: 600;
+}
+#osman-new-banner a { color: #241610; text-decoration: underline; }
